@@ -23,7 +23,7 @@ An application to keep track of machine repairs at Dr. Sillystringz's factory. T
 * Make sure you have MySql Workbench installed on your computer.
 * Make sure to have dotnet-ef installed too.<br>
 <em>This project uses <code>dotnet-ef --version 3.0.0</code> which I have globally installed but you can install it however you want. 
-* Download repo to your computer using either clone or the download link.
+* Download repo to your computer using either clone or the download link: https://github.com/marnionrails/FactoryTracker.Solution
 * Open the project in VScode or your terminal/IDE of choice.
 * Create a <code>appsettings.json</code> file in the root directory of the project folder. And add the following code replacing anything in square brackets with the information it represents specific to the project database:
 ```
@@ -53,7 +53,7 @@ Example of complete appsettings.json:
 * Click on the "Import Progress" tab at the top of the Data import window.
 * At the bottom of this tab click the button that reads <code>Start Import</code>.
 * Confirm the database has been imported and you can check it by clicking the "Schemas" tab on the navigator at the left side of the program. Right click in the white space and select "Refresh All"
-* Now using your IDE navigate into the FactoryTracker.Solution/Factory/ folder and use the command <code>dotnet run</code> to launch the program. 
+* Now using your IDE navigate into FactoryTracker.Solution/Factory folder and use the command <code>dotnet run</code> to launch the program. 
 * The site should be available at the server address you used in the <code>appsettings.json</code> folder.
 
 
