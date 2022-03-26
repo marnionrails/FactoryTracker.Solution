@@ -15,7 +15,7 @@ namespace Factory.Models
     public string Name { get; set; }
     public virtual ICollection<EngineerMachine> JoinEngineerMachine { get; set; }
 
-    public bool isDuplicateDoctor(FactoryContext _db, int engineerId)
+    public bool isDuplicateEngineer(FactoryContext _db, int engineerId)
     {
       var engineers =  _db.EngineerMachines.Where(engineer => engineer.MachineId == this.MachineId).ToList();
       bool isDuplicate = false;
