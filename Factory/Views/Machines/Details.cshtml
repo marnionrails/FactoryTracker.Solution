@@ -1,0 +1,67 @@
+@{
+  Layout = "_Layout";
+}
+@model Factory.Models.Machine
+
+<h2>Machine Details</h2>
+<hr>
+<h4><strong>@Html.DisplayNameFor(model => model.Name): </strong>@Html.DisplayFor(model => model.Name)</h4>
+
+<hr>
+
+<h4><strong>Doctors:</strong> (@Model.JoinEngineerMachine.Count)</h4>
+@if (Model.JoinEngineerMachine.Count == 0)
+{
+  <p>No Engineer is currently licensed to fix this machine</p>
+}
+else
+{
+  <ul>
+    @foreach (var join in Model.JoinEngineerMachine)
+    {
+      @using (Html.BeginForm("DeleteEngineer", "Machines"))
+      {
+        <p>
+          <button type="button" class="btn btn-danger btn-sm" data-bs-toggle="modal" data-bs-target="#Engineer_@(join.EngineerMachineId)">
+            Delete
+          </button>
+          - @Html.ActionLink($"{join.Engineer.Name}", "Details", "Engineers", new {id = join.Engineer.EngineerId})
+        </p>
+        <!-- Modal -->
+        <div class="modal fade" id="Engineer_@(join.EngineerMachineId)" tabindex="-1" aria-labelledby="EngineerLabel" aria-hidden="true">
+          <div class="modal-dialog">
+            <div class="modal-content">
+              <div class="modal-header">
+                <h5 class="modal-title" id="EngineerLabel_@(join.EngineerMachineId)">Delete @join.Engineer.Name</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+              </div>
+              <div class="modal-body">
+                <p>Clicking delete will make this action final.</p>
+              </div>
+              <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                @using (Html.BeginForm("DeleteEngineer", "Machines"))
+                {
+                  @Html.Hidden("joinId", @join.EngineerMachineId)
+                  <input type="submit" value="Delete"  class="btn btn-danger"/>
+                }
+              </div>
+            </div>
+          </div>
+        </div>
+      }
+    }
+  </ul>
+}
+
+@using (Html.BeginForm("AddEngineer","Machines"))
+{
+  @Html.HiddenFor(model => model.MachineId)
+  @Html.Label("Add Engineer")
+  @Html.DropDownList("EngineerId", "Select Engineer")
+  <input type="submit" value="add" />
+}
+<hr>
+
+<p>@Html.ActionLink("Edit Machine", "Edit", new { id = Model.MachineId })</p>
+<p>@Html.ActionLink("Delete Machine", "Delete", new { id = Model.MachineId})</p>

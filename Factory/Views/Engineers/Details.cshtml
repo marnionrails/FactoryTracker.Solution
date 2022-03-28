@@ -1,0 +1,78 @@
+@{
+  Layout = "_Layout";
+}
+
+@model Factory.Models.Engineer
+
+<h2>Engineer Details</h2>
+<hr>
+<h3><strong>Name: </strong>@Html.DisplayFor(model => model.Name)</h3>
+<p><strong>@Html.DisplayNameFor(model => model.HireDate): </strong>@Model.HireDate.ToString("MMMM dd, yyyy")</p>
+<hr>
+<div class="row">
+  <div class="col">
+    @if (Model.JoinEngineerMachine.Count == 0)
+    {
+      <p>This engineer hasn't been assigned any machines.</p>
+    }
+    else
+    {
+      <h4><strong>Machines:</strong> (@Model.JoinEngineerMachine.Count)</h4>
+      <ul>
+        @foreach (var join in Model.JoinEngineerMachine)
+        {
+          @using (Html.BeginForm("DeleteMachine", "Engineers"))
+          {
+            <p>
+              <!-- Modal Button Trigger -->
+              <button type="button" class="btn btn-danger btn-sm" data-bs-toggle="modal" data-bs-target="#Machine_@(join.EngineerMachineId)">
+                Delete
+              </button>
+              - @Html.ActionLink($"{join.Machine.Name}", "Details", "Machines", new {id = join.Machine.MachineId})
+            </p>
+
+            <!-- Modal -->
+            <div class="modal fade" id="Machine_@(join.EngineerMachineId)" tabindex="-1" aria-labelledby="MachineLabel" aria-hidden="true">
+              <div class="modal-dialog">
+                <div class="modal-content">
+                  <div class="modal-header">
+                    <h5 class="modal-title" id="MachineLabel_@(join.EngineerMachineId)">Delete @join.Machine.Name?</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                  </div>
+                  <div class="modal-body">
+                    <p>Clicking delete will remove this machine from the engineer. This action is final and you will need to re-add the machine manually if you wish to have them associated again.</p>
+                  </div>
+                  <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    @using (Html.BeginForm("DeleteMachine","Engineer"))
+                    {
+                      @Html.Hidden("joinId", @join.EngineerMachineId)
+                      <input type="submit" value="Delete"  class="btn btn-danger"/>
+                    }
+                  </div>
+                </div>
+              </div>
+            </div>
+          }
+        }
+      </ul>
+    }
+
+
+    @using (Html.BeginForm("AddMachine","Engineers"))
+    {
+      @Html.HiddenFor(model => model.EngineerId)
+
+      @Html.Label("Add Machine")
+      @Html.DropDownList("MachineId", "Select Machine")
+
+      <input type="submit" value="add" />
+    }
+
+    <hr>
+
+  </div>
+</div>
+<p>@Html.ActionLink("Edit Engineer", "Edit", new { id = Model.EngineerId })</p>
+<p>@Html.ActionLink("Delete Engineer", "Delete", new { id = Model.EngineerId})</p>
+
