@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -12,6 +13,8 @@ namespace Factory.Models
 
     public int EngineerId { get; set; }
     public string Name { get; set; }
+
+    public DateTime HireDate { get; set; }
     public virtual ICollection<EngineerMachine> JoinEngineerMachine { get; set; }
 
     public bool isDuplicateMachine(FactoryContext _db, int machineId)

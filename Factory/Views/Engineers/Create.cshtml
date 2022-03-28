@@ -11,8 +11,8 @@
   @Html.LabelFor(model => model.Name)
   @Html.TextBoxFor(model => model.Name)
 
-  @Html.Label("Add Machine")
-  @Html.DropDownList("MachineId", "Select Machine")
+  @Html.LabelFor(model => model.HireDate)
+  @Html.EditorFor(model => model.HireDate, new {type="date"})
 
   <input type="submit" value="Save" />
 }
